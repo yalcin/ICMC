@@ -3,7 +3,6 @@ require "json"
 
 module ICMC
   class CommandParser
-
     FUNC_REGEX = /(.*)\((.*)\)/
     getter command_string, command, params, cmd_arr
     # sample messages
@@ -17,7 +16,7 @@ module ICMC
     FUNCTIONS = {
       "ENCODED": "Base64.encode",
       # "DECODE": "Base64.decode",
-      "PLAIN": "String.new"
+      "PLAIN": "String.new",
     }
 
     def initialize(@command_string, @params = [] of String)
@@ -54,50 +53,49 @@ module ICMC
     end
 
     private def apply_icmc_fun(cmd : Array)
-    cmd.map { |ele|
-      if has_valid_func?(ele)
-        parse_args(ele)
-      else
-        ele
-      end
-    }
+      cmd.map { |ele|
+        if has_valid_func?(ele)
+          parse_args(ele)
+        else
+          ele
+        end
+      }
     end
 
     protected def parse_args(args : String)
-    if has_valid_func?(args)
-      cmd_args = parse_cmd_args(args)
+      if has_valid_func?(args)
+        cmd_args = parse_cmd_args(args)
 
-      fn_name = cmd_args[1]
-      fn_args = cmd_args[2]
+        fn_name = cmd_args[1]
+        fn_args = cmd_args[2]
 
-      _a = case fn_name
-      when "ENCODED"
-        Base64.decode_string(fn_args)
-      when "PLAIN"
-        fn_args
+        _a = case fn_name
+             when "ENCODED"
+               Base64.decode_string(fn_args)
+             when "PLAIN"
+               fn_args
+             else
+               raise Exception.new("CMD ARGS function does not found TODO: fonksiyon listesini goruntule")
+             end
       else
-        raise Exception.new("CMD ARGS function does not found TODO: fonksiyon listesini goruntule")
+        args
       end
-
-    else
-      args
+      # FUNCTIONS.each do |name, fn|
+      #   if(args =~ /#{name}/)
+      #     {{ puts(Base64.encode("dddd")) }}
+      #     # {{ "#{fn}(#{fn_args})" }}
+      #   end
+      # end
     end
-    # FUNCTIONS.each do |name, fn|
-    #   if(args =~ /#{name}/)
-    #     {{ puts(Base64.encode("dddd")) }}
-    #     # {{ "#{fn}(#{fn_args})" }}
-    #   end
-    # end
-  end
 
-  protected def parse_cmd_args(cmd_args)
-    cmd_args.split(FUNC_REGEX)
-  end
+    protected def parse_cmd_args(cmd_args)
+      cmd_args.split(FUNC_REGEX)
+    end
 
-  protected def has_valid_func?(cmd_args)
-    cmd_args =~ FUNC_REGEX ? true : false
-  end
+    protected def has_valid_func?(cmd_args)
+      cmd_args =~ FUNC_REGEX ? true : false
+    end
 
-# macro define_icmc_functions(name, )
+    # macro define_icmc_functions(name, )
   end
 end
