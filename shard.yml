@@ -1,0 +1,12 @@
+name: ICM
+version: 0.1.0
+
+authors:
+  -  <>
+
+license: MIT
+
+dependencies:
+  redis:
+    github: stefanwille/crystal-redis
+    version: ~> 1.2.0
