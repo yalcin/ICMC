@@ -7,7 +7,7 @@ require "./ICMC/services/system_service"
 require "./ICMC/command_parser"
 
 $redis = Redis.new
-$ROUTES = { "SYS": ICMC::SystemService.new($redis, [] of String).routes }
+$ROUTES = {"SYS": ICMC::SystemService.new($redis, [] of String).routes}
 
 module ICMC
   def self.run
@@ -17,8 +17,6 @@ module ICMC
         puts ICMC::CommandParser.new(message)
       }
     end
-
-
   end
 end
 

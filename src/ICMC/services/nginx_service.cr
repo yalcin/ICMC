@@ -2,6 +2,7 @@ module ICMC
   class NginxService < ICMCService
     getter name
     @name = "nginx"
+
     # ROUTES = { "NGINX": {
     #   "HOST": {
     #     "CREATE": host_create,
@@ -17,13 +18,13 @@ module ICMC
     def self.routes
       {
         "HOST": {
-          "CREATE": host_create,
-          "DESTROY": host_destroy,
-          "ENABLE": host_enable,
-          "DISABLE": host_disable,
-          "CREATE_AND_ENABLE", host_create_and_enable
-          },
-        "STATUS": status
+          "CREATE":            host_create,
+          "DESTROY":           host_destroy,
+          "ENABLE":            host_enable,
+          "DISABLE":           host_disable,
+          "CREATE_AND_ENABLE": host_create_and_enable,
+        },
+        "STATUS": status,
       }
     end
 
@@ -41,6 +42,5 @@ module ICMC
 
     def host_create_and_enable
     end
-
   end
 end

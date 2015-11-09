@@ -30,13 +30,11 @@ class ICMC::CLI
     end
 
     @redis.publish("ICMC", cmd)
-
   end
 
   def parse(cmd : Nil)
     true
   end
-
 end
 
 ICMC::CLI.new
